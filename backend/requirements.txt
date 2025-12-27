@@ -1,0 +1,14 @@
+fastapi
+uvicorn
+sqlalchemy
+# STT (offline)
+openai-whisper
+# Vision
+opencv-python-headless
+ultralytics
+# Emotion
+deepface
+tf-keras
+# AI Scene Detection
+torch
+torchvision

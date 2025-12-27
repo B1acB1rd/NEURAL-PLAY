@@ -1,0 +1,88 @@
+{
+  "name": "neuralplay",
+  "private": true,
+  "version": "1.0.0",
+  "description": "AI-Powered Video Analysis & Player",
+  "author": "Oredipe Oluwagbohunmi Adekunle (B1ACB1RD)",
+  "main": "electron/main.js",
+  "scripts": {
+    "dev": "concurrently \"npm:react-dev\" \"npm:backend\" \"npm:electron-wait\"",
+    "react-dev": "vite",
+    "backend": "python backend/main.py",
+    "electron-wait": "node -e \"setTimeout(() => {}, 3000)\" && npm run electron-dev",
+    "electron-dev": "cross-env NODE_ENV=development electron .",
+    "build": "vite build",
+    "preview": "vite preview",
+    "build:backend": "pyinstaller --onedir --name neuralplay-backend --add-data \"backend;backend\" backend/main.py",
+    "dist": "npm run build && electron-builder",
+    "dist:win": "npm run build && electron-builder --win",
+    "dist:mac": "npm run build && electron-builder --mac",
+    "dist:linux": "npm run build && electron-builder --linux"
+  },
+  "dependencies": {
+    "ffmpeg-static": "^5.3.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  },
+  "devDependencies": {
+    "@types/react": "^18.2.15",
+    "@types/react-dom": "^18.2.7",
+    "@vitejs/plugin-react": "^4.0.3",
+    "concurrently": "^8.2.2",
+    "cross-env": "^7.0.3",
+    "electron": "^25.9.8",
+    "electron-builder": "^24.9.1",
+    "vite": "^4.4.5",
+    "wait-on": "^7.2.0"
+  },
+  "build": {
+    "appId": "com.b1acb1rd.neuralplay",
+    "productName": "NeuralPlay",
+    "asar": false,
+    "directories": {
+      "output": "release",
+      "buildResources": "electron/icons"
+    },
+    "files": [
+      "dist/**/*",
+      "electron/**/*",
+      "package.json"
+    ],
+    "extraResources": [
+      {
+        "from": "backend-dist/neuralplay-backend",
+        "to": "backend",
+        "filter": [
+          "**/*"
+        ]
+      }
+    ],
+    "win": {
+      "target": [
+        "dir"
+      ],
+      "icon": "electron/icons/icon.ico",
+      "signAndEditExecutable": false
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true
+    },
+    "mac": {
+      "target": [
+        "dmg"
+      ],
+      "icon": "electron/icons/icon.icns",
+      "category": "public.app-category.video"
+    },
+    "linux": {
+      "target": [
+        "AppImage"
+      ],
+      "icon": "electron/icons",
+      "category": "Video"
+    }
+  }
+}
