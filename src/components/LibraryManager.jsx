@@ -175,17 +175,17 @@ function LibraryManager({ onVideoSelect, currentVideo }) {
         <div className="library-manager">
             {/* Tabs */}
             <div className="lib-tabs">
-                <button className={activeTab === 'library' ? 'active' : ''} onClick={() => setActiveTab('library')}>📚 Library</button>
-                <button className={activeTab === 'history' ? 'active' : ''} onClick={() => setActiveTab('history')}>🕐 History</button>
-                <button className={activeTab === 'favorites' ? 'active' : ''} onClick={() => setActiveTab('favorites')}>⭐ Favorites</button>
-                <button className={activeTab === 'watchLater' ? 'active' : ''} onClick={() => setActiveTab('watchLater')}>📌 Watch Later</button>
-                <button className={activeTab === 'playlists' ? 'active' : ''} onClick={() => setActiveTab('playlists')}>📝 Playlists</button>
+                <button className={activeTab === 'library' ? 'active' : ''} onClick={() => setActiveTab('library')}>Library</button>
+                <button className={activeTab === 'history' ? 'active' : ''} onClick={() => setActiveTab('history')}>History</button>
+                <button className={activeTab === 'favorites' ? 'active' : ''} onClick={() => setActiveTab('favorites')}>Favorites</button>
+                <button className={activeTab === 'watchLater' ? 'active' : ''} onClick={() => setActiveTab('watchLater')}>Watch Later</button>
+                <button className={activeTab === 'playlists' ? 'active' : ''} onClick={() => setActiveTab('playlists')}>Playlists</button>
             </div>
 
             {/* Toolbar */}
             {activeTab === 'library' && (
                 <div className="lib-toolbar">
-                    <button onClick={scanFolder}>📁 Scan Folder</button>
+                    <button onClick={scanFolder}>Scan Folder</button>
                     <select value={sortBy} onChange={e => setSortBy(e.target.value)}>
                         <option value="name">Sort: Name</option>
                         <option value="date">Sort: Date Added</option>
@@ -202,12 +202,12 @@ function LibraryManager({ onVideoSelect, currentVideo }) {
             {/* Playlist Controls */}
             {currentPlaylist && (
                 <div className="playlist-controls">
-                    <span>▶️ {currentPlaylist.name}</span>
-                    <button onClick={playPrevious}>⏮️</button>
-                    <button onClick={playNext}>⏭️</button>
-                    <button onClick={() => setIsShuffled(!isShuffled)} className={isShuffled ? 'active' : ''}>🔀</button>
+                    <span>Now Playing: {currentPlaylist.name}</span>
+                    <button onClick={playPrevious}>Prev</button>
+                    <button onClick={playNext}>Next</button>
+                    <button onClick={() => setIsShuffled(!isShuffled)} className={isShuffled ? 'active' : ''}>Shuffle</button>
                     <button onClick={() => setRepeatMode(repeatMode === 'none' ? 'all' : repeatMode === 'all' ? 'one' : 'none')}>
-                        {repeatMode === 'none' ? '➡️' : repeatMode === 'all' ? '🔁' : '🔂'}
+                        {repeatMode === 'none' ? 'No Repeat' : repeatMode === 'all' ? 'Repeat All' : 'Repeat One'}
                     </button>
                 </div>
             )}
@@ -227,7 +227,7 @@ function LibraryManager({ onVideoSelect, currentVideo }) {
                     {playlists.map(playlist => (
                         <div key={playlist.id} className="playlist-item">
                             <div className="playlist-header" onClick={() => playPlaylist(playlist)}>
-                                <span>📝 {playlist.name}</span>
+                                <span>{playlist.name}</span>
                                 <span className="video-count">{playlist.videos.length} videos</span>
                             </div>
                             <div className="playlist-videos">
@@ -256,10 +256,10 @@ function LibraryManager({ onVideoSelect, currentVideo }) {
                             </div>
                             <div className="video-actions">
                                 <button onClick={() => toggleFavorite(video)} title="Favorite">
-                                    {favorites.find(f => f.path === video.path) ? '⭐' : '☆'}
+                                    {favorites.find(f => f.path === video.path) ? '★' : '☆'}
                                 </button>
                                 <button onClick={() => toggleWatchLater(video)} title="Watch Later">
-                                    {watchLater.find(w => w.path === video.path) ? '📌' : '📍'}
+                                    {watchLater.find(w => w.path === video.path) ? '●' : '○'}
                                 </button>
                                 {playlists.length > 0 && (
                                     <select onChange={e => e.target.value && addToPlaylist(parseInt(e.target.value), video)}>
@@ -268,7 +268,7 @@ function LibraryManager({ onVideoSelect, currentVideo }) {
                                     </select>
                                 )}
                                 {activeTab === 'library' && (
-                                    <button onClick={() => removeFromLibrary(video.path)} title="Remove">🗑️</button>
+                                    <button onClick={() => removeFromLibrary(video.path)} title="Remove">×</button>
                                 )}
                             </div>
                         </div>

@@ -77,7 +77,7 @@ const VideoPlayer = forwardRef(({ src, onTimeUpdate, transcript, currentTime, vi
         recognition.interimResults = false;
         recognition.lang = 'en-US';
 
-        recognition.onstart = () => setVoiceStatus('🎤 Listening...');
+        recognition.onstart = () => setVoiceStatus('Listening...');
         recognition.onerror = (e) => setVoiceStatus(`Error: ${e.error}`);
         recognition.onend = () => {
             if (voiceEnabled) recognition.start(); // Restart if still enabled
@@ -268,13 +268,13 @@ const VideoPlayer = forwardRef(({ src, onTimeUpdate, transcript, currentTime, vi
                 const data = await response.json();
 
                 if (data.status === 'success') {
-                    alert(`✅ Clip saved successfully!\nSaved to: ${data.output_path}`);
+                    alert(`Clip saved successfully!\nSaved to: ${data.output_path}`);
                 } else {
-                    alert(`❌ Error saving clip: ${data.error}`);
+                    alert(`Error saving clip: ${data.error}`);
                 }
             } catch (error) {
                 console.error('Trim error:', error);
-                alert('❌ Failed to connect to server for trimming.');
+                alert('Failed to connect to server for trimming.');
             }
         }
     };
@@ -516,7 +516,7 @@ const VideoPlayer = forwardRef(({ src, onTimeUpdate, transcript, currentTime, vi
         return (
             <div className="video-placeholder">
                 <div style={{ textAlign: 'center', color: '#888' }}>
-                    <h2>🎬 NeuralPlay</h2>
+                    <h2>NeuralPlay</h2>
                     <p>Click "Open Video" to get started</p>
                     <p style={{ fontSize: '0.8em', marginTop: '20px' }}>
                         Shortcuts: Space=Play • ←→=Skip • ↑↓=Vol • F=Full • M=Mute<br />
@@ -646,9 +646,9 @@ const VideoPlayer = forwardRef(({ src, onTimeUpdate, transcript, currentTime, vi
             {/* Loop Indicator */}
             {isLooping && (
                 <div className="loop-indicator">
-                    🔁 Loop: {formatTime(loopStart)} - {formatTime(loopEnd)}
+                    Loop: {formatTime(loopStart)} - {formatTime(loopEnd)}
                     <button onClick={handleTrim} style={{ marginLeft: '10px', fontSize: '0.8em', padding: '2px 5px' }}>
-                        ✂️ Save Clip
+                        Save Clip
                     </button>
                 </div>
             )}
@@ -738,11 +738,11 @@ const VideoPlayer = forwardRef(({ src, onTimeUpdate, transcript, currentTime, vi
                 <div className="control-buttons">
                     <div className="left-controls">
                         <button onClick={togglePlay} title="Play/Pause (Space)">
-                            {isPlaying ? '⏸️' : '▶️'}
+                            {isPlaying ? '||' : '▷'}
                         </button>
-                        <button onClick={stop} title="Stop">⏹️</button>
-                        <button onClick={() => skip(-10)} title="Rewind 10s">⏪</button>
-                        <button onClick={() => skip(10)} title="Forward 10s">⏩</button>
+                        <button onClick={stop} title="Stop">◼</button>
+                        <button onClick={() => skip(-10)} title="Rewind 10s">«</button>
+                        <button onClick={() => skip(10)} title="Forward 10s">»</button>
                         <button onClick={changeSpeed} title="Change Speed" className="speed-btn">
                             {speed}x
                         </button>
@@ -761,14 +761,14 @@ const VideoPlayer = forwardRef(({ src, onTimeUpdate, transcript, currentTime, vi
                             title={voiceEnabled ? 'Disable Voice Control' : 'Enable Voice Control'}
                             style={{ color: voiceEnabled ? '#646cff' : 'white' }}
                         >
-                            🎤
+                            MIC
                         </button>
                         <button onClick={() => setIsAnnotating(!isAnnotating)} title="Annotate" style={{ color: isAnnotating ? '#646cff' : 'white' }}>
-                            🖊️
+                            DRAW
                         </button>
-                        <button onClick={takeScreenshot} title="Screenshot (S)">📷</button>
+                        <button onClick={takeScreenshot} title="Screenshot (S)">CAP</button>
                         <button onClick={toggleMute} title="Mute (M)">
-                            {isMuted ? '🔇' : '🔊'}
+                            {isMuted ? 'MUTED' : 'VOL'}
                         </button>
                         <input
                             type="range"
@@ -780,11 +780,11 @@ const VideoPlayer = forwardRef(({ src, onTimeUpdate, transcript, currentTime, vi
                             className="volume-slider"
                             title="Volume"
                         />
-                        <button onClick={() => setShowSettings(!showSettings)} title="Settings">⚙️</button>
+                        <button onClick={() => setShowSettings(!showSettings)} title="Settings">SET</button>
                         <button onClick={toggleMiniPlayer} title="Mini Player">
-                            {isMiniPlayer ? '🔲' : '🔳'}
+                            {isMiniPlayer ? 'EXIT' : 'PIP'}
                         </button>
-                        <button onClick={toggleFullscreen} title="Fullscreen (F)">⛶</button>
+                        <button onClick={toggleFullscreen} title="Fullscreen (F)">[ ]</button>
                     </div>
                 </div>
             </div>
@@ -795,13 +795,13 @@ const VideoPlayer = forwardRef(({ src, onTimeUpdate, transcript, currentTime, vi
                     <h4>Utility Tools</h4>
                     <div className="filter-row">
                         <button onClick={() => { setIsAnnotating(true); setShowSettings(false); }}>
-                            Start Annotating 🖊️
+                            Start Annotating
                         </button>
                     </div>
                     {isLooping && (
                         <div className="filter-row">
                             <button onClick={handleTrim}>
-                                Trim Selected Loop ✂️
+                                Trim Selected Loop
                             </button>
                         </div>
                     )}

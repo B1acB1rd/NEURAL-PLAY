@@ -157,7 +157,7 @@ function App() {
     const runStreamingAnalysis = async () => {
         if (!realPath) return;
 
-        setAnalysisStatus("🔄 Starting analysis...");
+        setAnalysisStatus("Starting analysis...");
         setScenes([]);
         setObjects([]);
         setEmotions([]);
@@ -175,26 +175,26 @@ function App() {
                         case 'scene':
                             if (enableScenes) {
                                 setScenes(prev => [...prev, data]);
-                                setAnalysisStatus("📽️ Detecting scenes...");
+                                setAnalysisStatus("Detecting scenes...");
                             }
                             break;
                         case 'object':
                             if (enableObjects) {
                                 setObjects(prev => [...prev, data]);
-                                setAnalysisStatus("🎯 Detecting objects...");
+                                setAnalysisStatus("Detecting objects...");
                             }
                             break;
                         case 'emotion':
                             if (enableEmotions) {
                                 setEmotions(prev => [...prev, data]);
-                                setAnalysisStatus("😊 Detecting emotions...");
+                                setAnalysisStatus("Detecting emotions...");
                             }
                             break;
                         case 'done':
                             // One phase complete
                             break;
                         case 'complete':
-                            setAnalysisStatus("✅ Analysis complete!");
+                            setAnalysisStatus("Analysis complete!");
                             setTimeout(() => setAnalysisStatus(""), 2000);
                             eventSource.close();
                             break;
@@ -208,13 +208,13 @@ function App() {
             };
 
             eventSource.onerror = () => {
-                setAnalysisStatus("⚠️ Connection lost");
+                setAnalysisStatus("Connection lost");
                 eventSource.close();
             };
 
         } catch (error) {
             console.error("Streaming failed:", error);
-            setAnalysisStatus("❌ Analysis failed");
+            setAnalysisStatus("Analysis failed");
         }
     };
 
@@ -316,7 +316,7 @@ function App() {
                     color: 'white',
                     zIndex: 9999
                 }}>
-                    📁 Drop video file here
+                    Drop video file here
                 </div>
             )}
 
@@ -337,7 +337,7 @@ function App() {
                 }}>
                     {onboardingStep === 0 && (
                         <>
-                            <h1>🎬 Welcome to NeuralPlay!</h1>
+                            <h1>Welcome to NeuralPlay!</h1>
                             <p style={{ fontSize: '1.2em', maxWidth: '500px' }}>
                                 AI-powered video player with transcription, scene detection,
                                 object recognition, and more.
@@ -346,7 +346,7 @@ function App() {
                     )}
                     {onboardingStep === 1 && (
                         <>
-                            <h2>⌨️ Keyboard Shortcuts</h2>
+                            <h2>Keyboard Shortcuts</h2>
                             <div style={{ textAlign: 'left', fontSize: '1.1em' }}>
                                 <p>Space - Play/Pause</p>
                                 <p>← / → - Seek 5s</p>
@@ -359,8 +359,8 @@ function App() {
                     )}
                     {onboardingStep === 2 && (
                         <>
-                            <h2>🎤 Voice Control</h2>
-                            <p>Click the 🎤 button to enable voice commands:</p>
+                            <h2>Voice Control</h2>
+                            <p>Click the microphone button to enable voice commands:</p>
                             <p style={{ fontStyle: 'italic' }}>"Play", "Pause", "Skip", "Mute", "Fullscreen"</p>
                         </>
                     )}
@@ -374,7 +374,7 @@ function App() {
                                 setShowOnboarding(false);
                                 localStorage.setItem('np_onboarded', 'true');
                             }} style={{ padding: '10px 30px', fontSize: '1.1em', background: 'var(--accent)' }}>
-                                Get Started! 🚀
+                                Get Started!
                             </button>
                         )}
                         <button onClick={() => {
@@ -409,7 +409,7 @@ function App() {
                 }}
                 title={sidebarVisible ? 'Hide Panel' : 'Show Panel'}
             >
-                {sidebarVisible ? '◀' : '▶'}
+                {sidebarVisible ? '‹' : '›'}
             </button>
 
             {/* Collapsible Sidebar */}
@@ -440,7 +440,7 @@ function App() {
                                 {/* Recent Files */}
                                 {recentFiles.length > 0 && (
                                     <details style={{ marginTop: '10px' }}>
-                                        <summary style={{ cursor: 'pointer', color: 'var(--text-secondary)' }}>📂 Recent Files ({recentFiles.length})</summary>
+                                        <summary style={{ cursor: 'pointer', color: 'var(--text-secondary)' }}>Recent Files ({recentFiles.length})</summary>
                                         <div style={{ marginTop: '5px', maxHeight: '150px', overflow: 'auto' }}>
                                             {recentFiles.map((path, i) => (
                                                 <div
@@ -492,7 +492,7 @@ function App() {
                                 {/* Chapters (Auto-generated from Scenes) */}
                                 {scenes.length > 0 && (
                                     <div className="results-list">
-                                        <h4>📖 Chapters ({scenes.length})</h4>
+                                        <h4>Chapters ({scenes.length})</h4>
                                         {scenes.slice(0, 15).map((scene, idx) => (
                                             <div key={idx} className="result-item chapter-item" onClick={() => seekTo(scene.start)}>
                                                 <div><strong>Chapter {idx + 1}</strong></div>
@@ -510,14 +510,14 @@ function App() {
                                             style={{ flex: 1, background: 'var(--bg-tertiary)' }}
                                             title="Skip intro (jump to second scene)"
                                         >
-                                            ⏭️ Skip Intro
+                                            Skip Intro
                                         </button>
                                         <button
                                             onClick={() => seekTo(scenes[scenes.length - 2]?.start || 0)}
                                             style={{ flex: 1, background: 'var(--bg-tertiary)' }}
                                             title="Skip to credits (jump to second-to-last scene)"
                                         >
-                                            🏁 Near End
+                                            Near End
                                         </button>
                                     </div>
                                 )}
@@ -525,7 +525,7 @@ function App() {
                                 {/* Objects - Collapsible */}
                                 {Object.keys(groupedObjects).length > 0 && (
                                     <details>
-                                        <summary>🎯 Objects ({objects.length} detections)</summary>
+                                        <summary>Objects ({objects.length} detections)</summary>
                                         <div className="results-list scrollable-section">
                                             {Object.entries(groupedObjects).slice(0, 8).map(([name, times]) => (
                                                 <div key={name} className="category-group">
@@ -547,7 +547,7 @@ function App() {
                                 {/* Emotions - Collapsible */}
                                 {Object.keys(groupedEmotions).length > 0 && (
                                     <details>
-                                        <summary>😊 Emotions ({emotions.length} detections)</summary>
+                                        <summary>Emotions ({emotions.length} detections)</summary>
                                         <div className="results-list scrollable-section">
                                             {Object.entries(groupedEmotions).map(([emotion, times]) => (
                                                 <div key={emotion} className="category-group">
@@ -595,7 +595,7 @@ function App() {
                                         style={{ flex: 1, background: 'var(--bg-tertiary)' }}
                                         disabled={isAsking}
                                     >
-                                        📝 AI Summary
+                                        AI Summary
                                     </button>
                                     <button
                                         onClick={() => {
@@ -604,11 +604,11 @@ function App() {
                                             const sorted = [...scenes].sort((a, b) => (b.duration || 0) - (a.duration || 0));
                                             const highlights = sorted.slice(0, 5);
                                             const msg = highlights.map((h, i) => `${i + 1}. ${formatTime(h.start)} (${h.duration?.toFixed(1)}s)`).join('\n');
-                                            alert(`🎬 Top 5 Highlights:\n${msg}`);
+                                            alert(`Top 5 Highlights:\n${msg}`);
                                         }}
                                         style={{ flex: 1, background: 'var(--bg-tertiary)' }}
                                     >
-                                        🎬 Highlights
+                                        Highlights
                                     </button>
                                 </div>
 
@@ -617,7 +617,7 @@ function App() {
 
                                 {/* App Settings Button */}
                                 <button onClick={() => setShowAppSettings(!showAppSettings)} style={{ marginTop: '10px', background: 'var(--bg-tertiary)' }}>
-                                    ⚙️ App Settings
+                                    App Settings
                                 </button>
 
                                 {/* App Settings Modal */}
@@ -627,23 +627,23 @@ function App() {
                                         <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', marginBottom: '15px' }}>
                                             <label style={{ display: 'flex', alignItems: 'center', gap: '8px', cursor: 'pointer' }}>
                                                 <input type="checkbox" checked={enableScenes} onChange={(e) => setEnableScenes(e.target.checked)} />
-                                                📽️ Scene Detection (Chapters)
+                                                Scene Detection (Chapters)
                                             </label>
                                             <label style={{ display: 'flex', alignItems: 'center', gap: '8px', cursor: 'pointer' }}>
                                                 <input type="checkbox" checked={enableObjects} onChange={(e) => setEnableObjects(e.target.checked)} />
-                                                🎯 Object Detection
+                                                Object Detection
                                             </label>
                                             <label style={{ display: 'flex', alignItems: 'center', gap: '8px', cursor: 'pointer' }}>
                                                 <input type="checkbox" checked={enableEmotions} onChange={(e) => setEnableEmotions(e.target.checked)} />
-                                                😊 Emotion Detection
+                                                Emotion Detection
                                             </label>
                                         </div>
 
                                         <h4>Theme</h4>
                                         <select value={theme} onChange={(e) => setTheme(e.target.value)} style={{ width: '100%', padding: '8px', marginBottom: '15px' }}>
-                                            <option value="dark">🌙 Dark</option>
-                                            <option value="light">☀️ Light</option>
-                                            <option value="high-contrast">⚡ High Contrast</option>
+                                            <option value="dark">Dark</option>
+                                            <option value="light">Light</option>
+                                            <option value="high-contrast">High Contrast</option>
                                         </select>
 
                                         <h4>UI Scale ({Math.round(fontScale * 100)}%)</h4>
@@ -669,7 +669,7 @@ function App() {
                                             } else {
                                                 alert('No transcript available');
                                             }
-                                        }}>📄 Export TXT</button>
+                                        }}>Export TXT</button>
 
                                         <button onClick={() => {
                                             if (transcript && transcript.segments) {
@@ -691,10 +691,10 @@ function App() {
                                             } else {
                                                 alert('No transcript available');
                                             }
-                                        }}>📺 Export SRT</button>
+                                        }}>Export SRT</button>
 
                                         <hr />
-                                        <h4>💙 Support the Project</h4>
+                                        <h4>Support the Project</h4>
                                         <p style={{ fontSize: '0.8em', color: 'var(--text-secondary)', marginBottom: '10px' }}>
                                             Made by <strong>Oredipe Oluwagbohunmi Adekunle</strong><br />
                                             aka <strong>B1ACB1RD</strong>
@@ -709,7 +709,7 @@ function App() {
                                                 }}
                                                 style={{ cursor: 'pointer', padding: '8px', background: 'var(--bg-secondary)', borderRadius: '4px' }}
                                             >
-                                                <strong>SOL:</strong> 79gVfZ4...2UzB <span style={{ opacity: 0.6 }}>📋 tap to copy</span>
+                                                <strong>SOL:</strong> 79gVfZ4...2UzB <span style={{ opacity: 0.6 }}>(tap to copy)</span>
                                             </div>
                                             <div
                                                 onClick={async () => {
@@ -720,7 +720,7 @@ function App() {
                                                 }}
                                                 style={{ cursor: 'pointer', padding: '8px', background: 'var(--bg-secondary)', borderRadius: '4px' }}
                                             >
-                                                <strong>ETH:</strong> 0x75DFF...2c0B <span style={{ opacity: 0.6 }}>📋 tap to copy</span>
+                                                <strong>ETH:</strong> 0x75DFF...2c0B <span style={{ opacity: 0.6 }}>(tap to copy)</span>
                                             </div>
                                             <div
                                                 onClick={async () => {
@@ -731,7 +731,7 @@ function App() {
                                                 }}
                                                 style={{ cursor: 'pointer', padding: '8px', background: 'var(--bg-secondary)', borderRadius: '4px' }}
                                             >
-                                                <strong>BTC:</strong> bc1qflj...sajv <span style={{ opacity: 0.6 }}>📋 tap to copy</span>
+                                                <strong>BTC:</strong> bc1qflj...sajv <span style={{ opacity: 0.6 }}>(tap to copy)</span>
                                             </div>
                                         </div>
 
