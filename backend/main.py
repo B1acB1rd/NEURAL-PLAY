@@ -23,7 +23,7 @@ from database import init_db
 def on_startup():
     init_db()
 
-from transcription import transcribe_video
+from transcription import transcribe_video, transcribe_video_streaming
 from database import SessionLocal, Video, Transcript
 from pydantic import BaseModel
 
@@ -33,6 +33,26 @@ class TranscribeRequest(BaseModel):
 @app.post("/transcribe")
 def api_transcribe(video_path: str):
     return transcribe_video(video_path)
+
+# Streaming transcription endpoint - streams segments as they're ready
+@app.get("/transcribe_stream")
+def api_transcribe_stream(video_path: str):
+    """Stream transcription results progressively via SSE.
+    
+    This allows subtitles to appear within ~30 seconds instead of waiting
+    for the entire video to be transcribed.
+    
+    Returns Server-Sent Events with:
+    - {"type": "segment", "data": {"start": N, "end": N, "text": "..."}}
+    - {"type": "progress", "percent": N, "message": "..."}
+    - {"type": "error", "error": "..."}
+    - {"type": "complete"}
+    """
+    def generate():
+        for data in transcribe_video_streaming(video_path):
+            yield f"data: {data}\n\n"
+    
+    return StreamingResponse(generate(), media_type="text/event-stream")
 
 @app.post("/store_transcript")
 async def store_transcript(video_path: str, data: dict):

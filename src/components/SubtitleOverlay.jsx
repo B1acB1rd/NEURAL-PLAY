@@ -47,22 +47,28 @@ function SubtitleOverlay({ transcript, currentTime, externalSubtitles, offset = 
 
     if (!currentSegment) return null;
 
-    // Default styles
+    // YouTube-style subtitle styling
     const defaultStyle = {
-        fontSize: '1.5em',
-        color: 'white',
-        textShadow: '2px 2px 2px black, 0 0 5px black',
-        backgroundColor: 'rgba(0,0,0,0.5)',
-        padding: '5px 10px',
-        borderRadius: '5px',
+        fontFamily: '"YouTube Noto", Roboto, "Arial Unicode Ms", Arial, Helvetica, sans-serif',
+        fontSize: '1.4em',
+        fontWeight: '500',
+        color: '#fff',
+        textShadow: '1px 1px 2px rgba(0,0,0,0.8), 0 0 3px rgba(0,0,0,0.5)',
+        backgroundColor: 'rgba(8, 8, 8, 0.75)',
+        padding: '6px 12px',
+        borderRadius: '4px',
         textAlign: 'center',
         whiteSpace: 'pre-wrap',
         position: 'absolute',
-        bottom: '80px',
+        bottom: '60px',
         left: '50%',
         transform: 'translateX(-50%)',
-        maxWidth: '80%',
-        zIndex: 10
+        maxWidth: '85%',
+        lineHeight: '1.4',
+        letterSpacing: '0.02em',
+        zIndex: 10,
+        // Smooth appearance animation
+        transition: 'opacity 0.1s ease-in-out'
     };
 
     return (

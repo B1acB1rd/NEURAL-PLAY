@@ -19,12 +19,10 @@ app.commandLine.appendSwitch('ignore-gpu-blocklist');
 // Start the Python backend
 function startBackend() {
     if (isDev) {
-        // Development: Run Python directly
-        console.log('Starting backend in development mode...');
-        backendProcess = spawn('python', ['backend/main.py'], {
-            cwd: path.join(__dirname, '..'),
-            shell: true
-        });
+        // Development: Backend is already started by npm concurrently (npm:backend)
+        // So we skip starting it here to avoid port conflict
+        console.log('Development mode: Backend already started by npm concurrently, skipping...');
+        return;
     } else {
         // Production: Run bundled executable
         console.log('Starting backend in production mode...');

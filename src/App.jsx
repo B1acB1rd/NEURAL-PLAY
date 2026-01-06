@@ -12,6 +12,7 @@ function App() {
     const [transcript, setTranscript] = useState(null);
     const [currentTime, setCurrentTime] = useState(0);
     const [isTranscribing, setIsTranscribing] = useState(false);
+    const [transcriptionProgress, setTranscriptionProgress] = useState(""); // Progress status for streaming transcription
     const [analysisStatus, setAnalysisStatus] = useState("");
     const [showLibrary, setShowLibrary] = useState(false);
     const [sidebarVisible, setSidebarVisible] = useState(false); // Hidden by default for clean video experience
@@ -221,23 +222,72 @@ function App() {
     const handleTranscribe = async () => {
         if (!realPath) return;
         setIsTranscribing(true);
+        setTranscriptionProgress("Starting transcription...");
+
+        // Use streaming transcription - segments appear progressively!
+        // This means subtitles start showing within ~30 seconds instead of waiting
+        // for the entire 2-hour video to be transcribed.
+        const segments = [];
+
         try {
-            const response = await fetch('http://localhost:8000/transcribe?video_path=' + encodeURIComponent(realPath), { method: 'POST' });
-            const data = await response.json();
-            if (data.error) {
-                alert("Transcription failed: " + data.error);
-            } else {
-                await fetch('http://localhost:8000/store_transcript?video_path=' + encodeURIComponent(realPath), {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(data)
-                });
-                setTranscript(data);
-            }
+            const eventSource = new EventSource(
+                `http://localhost:8000/transcribe_stream?video_path=${encodeURIComponent(realPath)}`
+            );
+
+            eventSource.onmessage = async (event) => {
+                try {
+                    const data = JSON.parse(event.data);
+
+                    switch (data.type) {
+                        case 'segment':
+                            // Add segment immediately - subtitles will show right away!
+                            segments.push(data.data);
+                            setTranscript({ segments: [...segments], text: segments.map(s => s.text).join(' ') });
+                            break;
+
+                        case 'progress':
+                            setTranscriptionProgress(`${data.message} (${data.percent}%)`);
+                            break;
+
+                        case 'error':
+                            alert("Transcription error: " + data.error);
+                            eventSource.close();
+                            setIsTranscribing(false);
+                            setTranscriptionProgress("");
+                            break;
+
+                        case 'complete':
+                            // Store final transcript to database
+                            const finalTranscript = { segments: [...segments], text: segments.map(s => s.text).join(' ') };
+                            setTranscript(finalTranscript);
+
+                            await fetch('http://localhost:8000/store_transcript?video_path=' + encodeURIComponent(realPath), {
+                                method: 'POST',
+                                headers: { 'Content-Type': 'application/json' },
+                                body: JSON.stringify(finalTranscript)
+                            });
+
+                            setTranscriptionProgress("Transcription complete!");
+                            setTimeout(() => setTranscriptionProgress(""), 2000);
+                            eventSource.close();
+                            setIsTranscribing(false);
+                            break;
+                    }
+                } catch (e) {
+                    console.error("Parse error:", e);
+                }
+            };
+
+            eventSource.onerror = () => {
+                eventSource.close();
+                setIsTranscribing(false);
+                setTranscriptionProgress("Connection lost");
+            };
+
         } catch (error) {
             alert("Error connecting to backend.");
-        } finally {
             setIsTranscribing(false);
+            setTranscriptionProgress("");
         }
     };
 
@@ -466,6 +516,13 @@ function App() {
                                 )}
 
                                 {analysisStatus && <div className="analyzing">{analysisStatus}</div>}
+
+                                {/* Transcription Progress */}
+                                {transcriptionProgress && (
+                                    <div className="analyzing" style={{ background: 'var(--accent)', color: 'white' }}>
+                                        {transcriptionProgress}
+                                    </div>
+                                )}
 
                                 <hr />
 
