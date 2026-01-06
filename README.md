@@ -8,21 +8,21 @@ NeuralPlay is an intelligent video player that uses machine learning to provide 
 
 ---
 
-## ✨ Features
+##  Features
 
-- 🎯 **Object Detection** - Real-time detection using YOLOv8
-- 😊 **Emotion Recognition** - Face detection with emotion analysis via DeepFace
-- 🎤 **Transcription** - Automatic speech-to-text using OpenAI Whisper
-- 🎬 **Scene Detection** - AI-powered scene boundary detection
-- 📝 **Smart Chapters** - Auto-generated chapter markers
-- 🎮 **Voice Control** - Control playback with voice commands
-- 🔊 **Audio Visualization** - Codec info and audio stats
-- ⌨️ **Keyboard Shortcuts** - Full keyboard control
-- 📚 **Library Management** - Organize and scan video folders
+-  **Object Detection** - Real-time detection using YOLOv8
+-  **Emotion Recognition** - Face detection with emotion analysis via DeepFace
+-  **Transcription** - Automatic speech-to-text using OpenAI Whisper
+-  **Scene Detection** - AI-powered scene boundary detection
+-  **Smart Chapters** - Auto-generated chapter markers
+-  **Voice Control** - Control playback with voice commands
+-  **Audio Visualization** - Codec info and audio stats
+-  **Keyboard Shortcuts** - Full keyboard control
+-  **Library Management** - Organize and scan video folders
 
 ---
 
-## 🚀 Quick Start (Development)
+##  Quick Start (Development)
 
 ### Prerequisites
 
@@ -34,7 +34,7 @@ NeuralPlay is an intelligent video player that uses machine learning to provide 
 
 1. **Clone the repository**
    ```bash
-   git clone https://github.com/YOUR_USERNAME/NeuralPlay.git
+   git clone https://github.com/B1acB1rd/NEURAL-PLAY.git
    cd NeuralPlay
    ```
 
@@ -57,7 +57,7 @@ NeuralPlay is an intelligent video player that uses machine learning to provide 
 
 ---
 
-## 🔨 Building for Distribution
+##  Building for Distribution
 
 ### Option 1: Full Build Script (Windows)
 
@@ -96,7 +96,7 @@ Output: `release/win-unpacked/NeuralPlay.exe`
 
 ---
 
-## 📁 Project Structure
+##  Project Structure
 
 ```
 NeuralPlay/
@@ -121,7 +121,7 @@ NeuralPlay/
 
 ---
 
-## ⌨️ Keyboard Shortcuts
+## ⌨ Keyboard Shortcuts
 
 | Key | Action |
 |-----|--------|
@@ -137,7 +137,7 @@ NeuralPlay/
 
 ---
 
-## 🤖 AI Models Used
+##  AI Models Used
 
 - **YOLOv8** - Object detection (Ultralytics)
 - **DeepFace** - Face detection and emotion recognition
@@ -148,7 +148,7 @@ Models are automatically downloaded on first use.
 
 ---
 
-## 💙 Support the Project
+##  Support the Project
 
 Help fund AI model training and development:
 
@@ -160,13 +160,13 @@ Help fund AI model training and development:
 
 ---
 
-## 📄 License
+##  License
 
 MIT License - Feel free to use, modify, and distribute.
 
 ---
 
-## 🙏 Credits
+##  Credits
 
 **Made by Oredipe Oluwagbohunmi Adekunle (B1ACB1RD)**
 
